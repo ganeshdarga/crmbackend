@@ -90,6 +90,14 @@ class adminViewSet(viewsets.ModelViewSet):
             return Response(AdminSerializer(admin).data)
         except Admin.DoesNotExist:
             return Response({'message': 'wrong details'}, status=400)
+            
+    @action(detail=False, methods=['post'])
+    def add_admin(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Admin added successfully'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class companiesViewSet(viewsets.ModelViewSet):
     queryset = companies.objects.all()

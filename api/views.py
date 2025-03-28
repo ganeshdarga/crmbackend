@@ -90,10 +90,14 @@ class adminViewSet(viewsets.ModelViewSet):
             return Response(AdminSerializer(admin).data)
         except Admin.DoesNotExist:
             return Response({'message': 'wrong details'}, status=400)
-            
     @action(detail=False, methods=['post'])
     def add_admin(self, request):
-        serializer = self.serializer_class(data=request.data)
+        # Directly providing the data to the serializer
+        data = {
+            'name': 'admin',  # Mapping userName to 'name'
+            'password': 'admin@123'
+        }
+        serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response({'message': 'Admin added successfully'}, status=status.HTTP_201_CREATED)

@@ -112,6 +112,15 @@ class usernotification(models.Model):
     remark = models.CharField(max_length=255)
 
 
+class SQLLogAuditTrail(models.Model):
+    id = models.AutoField(primary_key=True)
+    email = models.CharField(max_length=255)
+    status = models.IntegerField()
+    statusdata = models.CharField(max_length=255)
+    remark = models.CharField(max_length=255)
+
+
+
 
 
 
